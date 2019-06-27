@@ -54,7 +54,7 @@ class Inputs:
 
     @staticmethod
     def get_gate_mod():  # returns user defined note length mod  percentage as decimal
-        return float(input('What percentage should note length be modded by?: '))
+        return float(input('What percentage should gate length be modded by?: '))
 
     @staticmethod
     def get_time_mod():  # returns user defined timing mod percentage as decimal
@@ -73,7 +73,7 @@ class Inputs:
         return input('Select output scale type (maj/min/penta/whole/chrom: ')
 
     @staticmethod
-    def play_every_step():  # returns true if
+    def play_every_step():  # if yes returned program will repeat previous note when non-scale note is generated
         response = input('Play note on every step (y/n): ').lower()
         if response == 'y':
             return True
@@ -116,7 +116,7 @@ class Inputs:
 
 class RandomNote:
     def __init__(self):
-        self.params = Inputs()  # this to allow testing, switch to Inputs for use.
+        self.params = Inputs()  # stores all the user input variables needed to define the sequence
         self.out_port = mido.open_output(self.params.get_port())
 
     def note_gen(self):  # generate a random number within the note range defined by Inputs.scale variable
@@ -135,13 +135,13 @@ class RandomNote:
         else:
             return (self.params.interval/2) - ((self.params.interval/2)*mod_amount)
 
-    def micro_time(self):
+    def micro_time(self):  # applies random timing variation to interval time and returns corrected interval length
         if random.getrandbits(1):
             return self.params.interval + (self.params.interval * self.params.time_mod)
         else:
             return self.params.interval - (self.params.interval * self.params.time_mod)
 
-    def note_processor(self):
+    def note_processor(self):  # co-ordinates output of note messages
         loops = self.params.note_value * self.params.bars
         last_note = self.params.scale[0]
         while loops > 0:
