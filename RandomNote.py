@@ -29,6 +29,7 @@ class Inputs:
         self.interval = self.get_timebase()
         self.bars = self.get_no_of_bars()
         self.gate_mod = self.get_gate_mod()
+        self.quantise_gate = self.get_quantise()
         self.time_mod = self.get_time_mod()
         self.every_step = self.play_every_step()
 
@@ -57,6 +58,12 @@ class Inputs:
         return float(input('What percentage should gate length be modded by?: '))
 
     @staticmethod
+    def get_quantise():
+        response = input('Quantise gate modulation? (y/n): ').lower()
+        if response == 'y':
+            return True
+
+    @staticmethod
     def get_time_mod():  # returns user defined timing mod percentage as decimal
         return float(input('What percentage should note timing by modded by?: ')) / 100.0
 
@@ -77,8 +84,6 @@ class Inputs:
         response = input('Play note on every step (y/n): ').lower()
         if response == 'y':
             return True
-        else:
-            return False
 
     @staticmethod
     def note_list_gen(note_key, note_range):  # returns list of note numbers to be output
@@ -131,15 +136,31 @@ class RandomNote:
     def gate_length(self):  # applies gate length modulation to note, returns corrected gate length
         mod_amount = (random.random() * self.params.gate_mod)/100
         if random.getrandbits(1):
-            return (self.params.interval/2) + ((self.params.interval/2)*mod_amount)
+            return (self.params.interval/2.0) + ((self.params.interval/2)*mod_amount)
         else:
-            return (self.params.interval/2) - ((self.params.interval/2)*mod_amount)
+            return (self.params.interval/2.0) - ((self.params.interval/2)*mod_amount)
+
+    def gate_length_quant(self):  # as gate_length but quantised to 16ths
+        mod_options = [-0.75, -0.5, -0.25, -0.125, 0.125, 0.25, 0.5, 0.75]
+        for mod in mod_options:
+            if abs(mod * 100) > self.params.gate_mod:
+                mod_options.remove(mod)
+        for n in range(0, int(len(mod_options) / 2)):
+            mod_options.append(0)
+        return (self.params.interval/2) + (random.choice(mod_options) * (self.params.interval/2))
 
     def micro_time(self):  # applies random timing variation to interval time and returns corrected interval length
         if random.getrandbits(1):
             return self.params.interval + (self.params.interval * self.params.time_mod)
         else:
             return self.params.interval - (self.params.interval * self.params.time_mod)
+
+    def play_note(self, note):
+        msg = mido.Message('note_on', channel=self.params.channel, note=note)
+        self.out_port.send(msg)
+        sleep(self.gate_length())
+        msg = mido.Message('note_off', channel=self.params.channel, note=note)
+        self.out_port.send(msg)
 
     def note_processor(self):  # co-ordinates output of note messages
         loops = self.params.note_value * self.params.bars
@@ -150,25 +171,12 @@ class RandomNote:
             note = self.scale_check(self.note_gen())
             rest = self.micro_time()
             if note:
-                msg = mido.Message('note_on', channel=self.params.channel, note=note)
-                self.out_port.send(msg)
-                sleep(self.gate_length())
-                msg = mido.Message('note_off', channel=self.params.channel, note=note)
-                self.out_port.send(msg)
+                self.play_note(note)
                 last_note = note
-                end = dtime()
-                sleep(rest - (end - start))
             elif self.params.every_step:
-                msg = mido.Message('note_on', channel=self.params.channel, note=last_note)
-                self.out_port.send(msg)
-                sleep(self.gate_length())
-                msg = mido.Message('note_off', channel=self.params.channel, note=last_note)
-                self.out_port.send(msg)
-                end = dtime()
-                sleep(rest - (end - start))
-            else:
-                end = dtime()
-                sleep(rest - (end - start))
+                self.play_note(last_note)
+            end = dtime()
+            sleep(rest - (end - start))
         print('End of Pattern')
         self.out_port.close()
 
