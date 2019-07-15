@@ -65,7 +65,7 @@ class Inputs:
 
     @staticmethod
     def get_time_mod():  # returns user defined timing mod percentage as decimal
-        return float(input('What percentage should note timing by modded by?: ')) / 100.0
+        return float(input('What percentage should note timing by modded by?: '))
 
     @staticmethod
     def get_channel():  # requests user channel
@@ -151,12 +151,12 @@ class RandomNote:
 
     def micro_time(self):
         """ applies random timing variation to interval time and returns corrected interval length
-            note: this method currently has no reference to grid so use of timing modulation will
-            result in the sequence playing back in free time"""
+            nb: this method currently has no reference to grid so use of timing modulation will
+            result in the sequence playing in free time"""
         if random.getrandbits(1):
-            return self.params.interval + (self.params.interval * self.params.time_mod)
+            return self.params.interval + (self.params.interval * (self.params.time_mod/100))
         else:
-            return self.params.interval - (self.params.interval * self.params.time_mod)
+            return self.params.interval - (self.params.interval * (self.params.time_mod/100))
 
     def play_note(self, note):  # outputs note on and note off message for each iteration of note_processor loop
         msg = mido.Message('note_on', channel=self.params.channel, note=note)
@@ -167,7 +167,7 @@ class RandomNote:
 
     def note_processor(self):  # co-ordinates output of note messages
         loops = self.params.note_value * self.params.bars
-        last_note = self.params.scale[0]
+        last_note = random.choice(self.params.scale)
         while loops > 0:
             loops -= 1
             start = dtime()
