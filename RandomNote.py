@@ -149,13 +149,16 @@ class RandomNote:
             mod_options.append(0)
         return (self.params.interval/2) + (random.choice(mod_options) * (self.params.interval/2))
 
-    def micro_time(self):  # applies random timing variation to interval time and returns corrected interval length
+    def micro_time(self):
+        """ applies random timing variation to interval time and returns corrected interval length
+            note: this method currently has no reference to grid so use of timing modulation will
+            result in the sequence playing back in free time"""
         if random.getrandbits(1):
             return self.params.interval + (self.params.interval * self.params.time_mod)
         else:
             return self.params.interval - (self.params.interval * self.params.time_mod)
 
-    def play_note(self, note):
+    def play_note(self, note):  # outputs note on and note off message for each iteration of note_processor loop
         msg = mido.Message('note_on', channel=self.params.channel, note=note)
         self.out_port.send(msg)
         sleep(self.gate_length())
