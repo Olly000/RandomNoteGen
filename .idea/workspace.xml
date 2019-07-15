@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2e71ee5-96f0-46c8-897c-d0d6a5d8d3b3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/RandomNoteV2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RandomNote.py" beforeDir="false" afterPath="$PROJECT_DIR$/RandomNote.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RandomNoteV2.py" beforeDir="false" afterPath="$PROJECT_DIR$/RandomNoteV2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,21 +16,16 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/RandomNote.py">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/RandomNoteV2.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1003">
-                  <caret line="74" column="17" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
+                <state relative-caret-position="265">
+                  <caret line="123" column="66" lean-forward="true" selection-start-line="123" selection-start-column="66" selection-end-line="123" selection-end-column="66" />
                   <folding>
                     <element signature="e#24#35#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/RandomNoteV2.py">
-              <provider selected="true" editor-type-id="text-editor" />
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
@@ -42,18 +37,6 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
-                  <folding>
-                    <element signature="e#24#44#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
         </leaf>
       </split-first>
       <split-second>
@@ -61,10 +44,22 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1676">
-                  <caret line="99" column="19" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
+                <state relative-caret-position="214">
+                  <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
                   <folding>
                     <element signature="e#24#44#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/RandomNote.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="442">
+                  <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+                  <folding>
+                    <element signature="e#24#35#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -92,8 +87,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/RandomNote.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py" />
+        <option value="$PROJECT_DIR$/RandomNote.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py" />
         <option value="$PROJECT_DIR$/RandomNoteV2.py" />
       </list>
@@ -110,21 +105,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="Course" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="RandomNoteGen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RandomNoteGen" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -144,7 +125,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.RandomNoteGUI">
+  <component name="RunManager" selected="Python.RandomNoteV2">
     <configuration name="RandomNote" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="RandomNoteGen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -187,6 +168,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="RandomNoteV2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="RandomNoteGen" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RandomNoteV2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="scratch_1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="RandomNoteGen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -210,9 +212,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.RandomNoteV2" />
         <item itemvalue="Python.RandomNoteGUI" />
-        <item itemvalue="Python.scratch_1" />
         <item itemvalue="Python.RandomNote" />
+        <item itemvalue="Python.scratch_1" />
       </list>
     </recent_temporary>
   </component>
@@ -241,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1562881476400</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Interface functioning - need to associate with Inputs class">
+      <created>1563201884197</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1563201884197</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -339,7 +349,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Amended method comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Amended method comments" />
+    <MESSAGE value="Interface functioning - need to associate with Inputs class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Interface functioning - need to associate with Inputs class" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../WordGame/wordgame.py">
@@ -369,28 +380,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
-          <folding>
-            <element signature="e#24#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/RandomNote.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1003">
-          <caret line="74" column="17" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
+        <state relative-caret-position="442">
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+          <folding>
+            <element signature="e#24#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/RandomNoteV2.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="123" column="66" lean-forward="true" selection-start-line="123" selection-start-column="66" selection-end-line="123" selection-end-column="66" />
+          <folding>
+            <element signature="e#24#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
