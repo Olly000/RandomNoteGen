@@ -13,13 +13,13 @@ mido.set_backend('mido.backends.pygame')
 pym.init()
 
 
-class Interface(tk.Frame):
+class Interface(tk.Frame):  # Creates the app's GUI and initiates processing through generate_output method
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
         self.num_fields = ['Port No.', 'Channel', 'BPM', 'No. of Bars',
                            'Note Length', 'Octave Range', 'Gate Mod', 'Time Mod']
-        self.defaults = [0, 1, 120, 16, 8, 2, 0, 0, 'c', 'maj']
+        self.defaults = [0, 1, 120, 8, 16, 2, 0, 0, 'c', 'maj']
         self.key_maps = {
             'maj': [0, 2, 4, 5, 7, 9, 11],
             'min': [0, 2, 3, 5, 7, 9, 10],
@@ -33,8 +33,7 @@ class Interface(tk.Frame):
         self.quantise = self.create_quant_box()
         self.every_step = self.create_every_note()
 
-    def grab_entry_fields(self):  # input is an object of the Inputs() class from orig script.
-        #  statements that assign input class attributes to .get() for relevant fields
+    def grab_entry_fields(self):  # Obtains current values from input widgets and returns them as a list
         data = []
         for item in self.numbers:
             data.append(int(item[1].get()))
@@ -45,18 +44,21 @@ class Interface(tk.Frame):
         return data
 
     def generate_output(self):
+        """Triggered as a callback from the play button - creates instances of the input handling class
+            FormInputs and the note generating RandomNote class then runs the note generation method of RandomNote"""
         output = FormInputs(self.grab_entry_fields())
         generate = RandomNote(output)
         generate.note_processor()
 
-    def port_popup(self):
+    @staticmethod
+    def port_popup():  # creates a pop-up window listing available MIDI ports when the display widget is clicked
         port_list = mido.get_output_names()
         text = 'Available MIDI ports are \n'
         for name in range(0, len(port_list)):
             text += ' %s %s\n' % (name, port_list[name])
         messagebox.showinfo('MIDI OUT', text)
 
-    def clear_all(self):
+    def clear_all(self):  # clears all current values in widgets then calls populate_defaults when clear widget clicked
         for field in self.numbers:
             field[1].delete(0, 'end')
         self.key.delete(0, 'end')
@@ -64,14 +66,14 @@ class Interface(tk.Frame):
         self.every_step.set(False)
         self.populate_defaults()
 
-    def populate_defaults(self):
+    def populate_defaults(self):  # inserts default parameters in input widgets
         index = 0
         for field in self.numbers:
             field[1].insert(0, self.defaults[index])
             index += 1
-        self.key.insert(0,self.defaults[-2])
+        self.key.insert(0, self.defaults[-2])
 
-    def create_num_fields(self):
+    def create_num_fields(self):  # creates entry widgets for each of the numerical input fields
         entries = []
         row = 0
         for field in self.num_fields:
@@ -84,7 +86,7 @@ class Interface(tk.Frame):
             row += 1
         return entries
 
-    def create_char_field(self):
+    def create_char_field(self):  # creates an entry widget for the key field, which remains a string
         lab = tk.Label(width=15, text="Key")
         key_field = tk.Entry(width=3)
         key_field.insert('0', self.defaults[-2])
@@ -92,7 +94,7 @@ class Interface(tk.Frame):
         key_field.grid(column=1, row=8, pady=5, sticky='e')
         return key_field
 
-    def create_scale_menu(self):
+    def create_scale_menu(self):  # creates a listbox entry to allow user to select from available scale maps
         lab = tk.Label(width=15, text="Scale")
         ddown = tk.Listbox(root, height=len(self.key_maps))
         lab.grid(column=0, row=9, pady=5, sticky='w')
@@ -101,27 +103,30 @@ class Interface(tk.Frame):
             ddown.insert("end", key)
         return ddown
 
-    def create_every_note(self):
+    @staticmethod
+    def create_every_note():
+        # creates a tickbox to decide whether to play on every step, when out of scale note is generated
         label = 'Play Every Step?'
         step_var = tk.IntVar(root, label)
         step_var.set(False)
-        every_step = tk.Checkbutton(root, text=label,var=step_var)
+        every_step = tk.Checkbutton(root, text=label, var=step_var)
         every_step.grid(column=2, row=3, padx=30, sticky='w')
         return step_var
 
-    def create_quant_box(self):
+    @staticmethod
+    def create_quant_box():
         label = 'Quantise Gate Length Modulation?'
         quant_state = tk.IntVar(root, label)
         quant_state.set(False)
-        quantise = tk.Checkbutton(root,text=label, variable=quant_state)
+        quantise = tk.Checkbutton(root, text=label, variable=quant_state)
         quantise.grid(column=2, row=6, padx=30)
         return quant_state
 
     def create_buttons(self):
         clear = tk.Button(root, text='Return to Defaults', command=self.clear_all)
-        play = tk.Button(root,text='Play Sequence', command=self.generate_output, bg='green')
+        play = tk.Button(root, text='Play Sequence', command=self.generate_output, bg='green')
         display_ports = tk.Button(root, text='Display Ports', command=self.port_popup)
-        clear.grid(column=3, row=0, padx = 30, pady=5, sticky='n')
+        clear.grid(column=3, row=0, padx=30, pady=5, sticky='n')
         play.grid(column=3, row=11, padx=10, pady=10, sticky='sw')
         display_ports.grid(column=2, row=0, padx=15, sticky='w')
         quit_button = tk.Button(root, text="Quit", bg="red",
@@ -130,7 +135,7 @@ class Interface(tk.Frame):
 
 
 class FormInputs:
-    def __init__(self, user_data):  # user_data is a list returned by the Interface class when play burron
+    def __init__(self, user_data):  # user_data is a list returned by the Interface class when play button is clicked
         self.key_values = {'c': 0, 'c#': 1, 'd': 2, 'd#': 3, 'e': 4,
                            'f': 5, 'f#': 6, 'g': 7, 'g#': 8, 'a': 9, 'a#': 10, 'b': 11}
         self.key_maps = {
@@ -203,7 +208,7 @@ class RandomNote:
     def note_gen(self):  # generate a random number within the note range defined by Inputs.scale variable
         return random.randint(self.params.scale[0], (self.params.scale[-1]+1))
 
-    def scale_check(self, note):
+    def scale_check(self, note):  # checks generated note is in the params.scale variable
         if note in self.params.scale:
             return note
         else:
@@ -266,4 +271,3 @@ if __name__ == '__main__':
     app = Interface(master=root)
     app.master.title("Random Note Generator")
     app.mainloop()
-
