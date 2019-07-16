@@ -2,11 +2,13 @@
   <dictionary name="Emma">
     <words>
       <w>chrom</w>
+      <w>ddown</w>
       <w>dtime</w>
       <w>mido</w>
       <w>octs</w>
       <w>penta</w>
       <w>pygame</w>
+      <w>quant</w>
     </words>
   </dictionary>
 </component>
