@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2e71ee5-96f0-46c8-897c-d0d6a5d8d3b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Emma.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Emma.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RandomNoteV2.py" beforeDir="false" afterPath="$PROJECT_DIR$/RandomNoteV2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,61 +11,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/RandomNoteV2.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-602">
-                  <caret line="210" column="89" selection-start-line="210" selection-start-column="89" selection-end-line="210" selection-end-column="89" />
-                  <folding>
-                    <element signature="e#24#35#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1819">
-                  <caret line="107" column="5" selection-start-line="107" selection-start-column="5" selection-end-line="107" selection-end-column="5" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-704">
-                  <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
-                  <folding>
-                    <element signature="e#24#44#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/RandomNote.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1547">
-                  <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
-                  <folding>
-                    <element signature="e#24#35#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="140" column="81" selection-start-line="140" selection-start-column="81" selection-end-line="140" selection-end-column="81" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/RandomNoteV3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3492">
+              <caret line="41" column="45" lean-forward="true" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -87,16 +50,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py" />
         <option value="$PROJECT_DIR$/RandomNote.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py" />
         <option value="$PROJECT_DIR$/RandomNoteV2.py" />
+        <option value="$PROJECT_DIR$/../midi remapper/MidiMapperV02.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py" />
+        <option value="$PROJECT_DIR$/RandomNoteV3.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="y" value="155" />
+    <option name="x" value="-290" />
+    <option name="y" value="287" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -105,13 +70,32 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="RandomNoteGen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RandomNoteGen" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Course" />
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../midi remapper/MidiMapperV02.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Emma\PycharmProjects\midi remapper" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -125,7 +109,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.RandomNoteV2">
+  <component name="RunManager" selected="Python.scratch_1">
     <configuration name="RandomNote" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="RandomNoteGen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -212,10 +196,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.scratch_1" />
         <item itemvalue="Python.RandomNoteV2" />
         <item itemvalue="Python.RandomNoteGUI" />
         <item itemvalue="Python.RandomNote" />
-        <item itemvalue="Python.scratch_1" />
       </list>
     </recent_temporary>
   </component>
@@ -274,7 +258,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.17913593" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17913593" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -364,43 +348,10 @@
     <entry file="file://$PROJECT_DIR$/../WordGame/wordgame.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../midi remapper/MidiMapperV02.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="40" selection-start-line="10" selection-end-line="10" selection-end-column="40" />
-          <folding>
-            <element signature="e#111#122#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/kivy/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="489" column="8" selection-start-line="489" selection-start-column="8" selection-end-line="489" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1819">
-          <caret line="107" column="5" selection-start-line="107" selection-start-column="5" selection-end-line="107" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-704">
-          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
-          <folding>
-            <element signature="e#24#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/kivy/app.py" />
     <entry file="file://$PROJECT_DIR$/RandomNote.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1547">
+        <state relative-caret-position="-1853">
           <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
@@ -410,11 +361,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RandomNoteV2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-602">
-          <caret line="210" column="89" selection-start-line="210" selection-start-column="89" selection-end-line="210" selection-end-column="89" />
+        <state relative-caret-position="343">
+          <caret line="58" column="45" lean-forward="true" selection-start-line="58" selection-start-column="45" selection-end-line="58" selection-end-column="45" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../midi remapper/MidiMapperV02.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+          <folding>
+            <element signature="e#111#122#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/RandomNoteGUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+          <folding>
+            <element signature="e#24#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="140" column="81" selection-start-line="140" selection-start-column="81" selection-end-line="140" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RandomNoteV3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3492">
+          <caret line="41" column="45" lean-forward="true" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="45" />
         </state>
       </provider>
     </entry>
