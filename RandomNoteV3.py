@@ -147,7 +147,7 @@ class FormInputs:
             'chrom': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         }
         #  assign class variables to the inputs obtained from the Interface class
-        self.port = user_data['Port No']
+        self.port = user_data['Port No.']
         self.channel = user_data['Channel'] - 1
         self.bpm = user_data['BPM']
         self.bars = user_data['No. of Bars']
@@ -228,7 +228,7 @@ class RandomNote:
             if abs(mod * 100) > self.params.gate_mod:
                 mod_options.remove(mod)
         for n in range(0, int(len(mod_options) / 2)):
-            mod_options.append(0)
+            mod_options.append(n)
         return (self.params.interval/2) + (random.choice(mod_options) * (self.params.interval/2))
 
     def micro_time(self):
