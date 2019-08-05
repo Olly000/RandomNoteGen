@@ -3,8 +3,9 @@
 import mido
 import pygame.midi as pym
 import tkinter as tk
-from tkinter import messagebox
 import random
+import threading
+from tkinter import messagebox
 from time import sleep
 from timeit import default_timer as dtime
 
@@ -12,12 +13,14 @@ mido.set_backend('mido.backends.pygame')
 
 pym.init()
 
+run_state = False  # global variable that allows processing thread to be ended through interface button click
+
 
 class Interface(tk.Frame):  # Creates the app's GUI and initiates processing through generate_output method
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-        self.num_fields = ['Port No.', 'Channel', 'BPM', 'No. of Bars',
+        self.num_fields = ['Port No', 'Channel', 'BPM', 'No. of Bars',
                            'Note Length', 'Octave Range', 'Gate Mod', 'Time Mod']
         self.defaults = [0, 1, 120, 8, 16, 2, 0, 0, 'c', 'maj']
         self.key_maps = {
@@ -33,6 +36,17 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         self.quantise = self.create_quant_box()
         self.every_step = self.create_every_note()
 
+    def end_app(self):
+        global run_state
+        run_state = False
+        self.master.destroy()
+        print('App terminated by user')
+
+    @staticmethod
+    def stop_seq():
+        global run_state
+        run_state = False
+
     def grab_entry_fields(self):  # Obtains current values from input widgets and returns them as a list
         data = []
         fields = self.num_fields + ['Key', 'Scale', 'Every Step', 'Quantise']
@@ -46,10 +60,13 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
 
     def generate_output(self):
         """Triggered as a callback from the play button - creates instances of the input handling class
-            FormInputs and the note generating RandomNote class then runs the note generation method of RandomNote"""
-        output = FormInputs(self.grab_entry_fields())
-        generate = RandomNote(output)
-        generate.note_processor()
+            FormInputs and the note generating class RandomNote then runs the note generation method of RandomNote"""
+        global run_state
+        run_state = True
+        user_input = FormInputs(self.grab_entry_fields())
+        generate = RandomNote(user_input)
+        process_thread = threading.Thread(target=generate.loop_controller)
+        process_thread.start()
 
     @staticmethod
     def port_popup():  # creates a pop-up window listing available MIDI ports when the display widget is clicked
@@ -126,13 +143,14 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
     def create_buttons(self):
         clear = tk.Button(root, text='Return to Defaults', command=self.clear_all)
         play = tk.Button(root, text='Play Sequence', command=self.generate_output, bg='green')
+        stop_seq = tk.Button(root, text='Stop Sequence', command=self.stop_seq, bg='yellow')
         display_ports = tk.Button(root, text='Display Ports', command=self.port_popup)
+        quit_button = tk.Button(root, text="Quit", bg="red", command=self.end_app)
         clear.grid(column=3, row=0, padx=30, pady=5, sticky='n')
         play.grid(column=3, row=11, padx=10, pady=10, sticky='sw')
+        stop_seq.grid(column=3, row=12, padx=10, pady=10, sticky='sw')
         display_ports.grid(column=2, row=0, padx=15, sticky='w')
-        quit_button = tk.Button(root, text="Quit", bg="red",
-                                command=self.master.destroy)
-        quit_button.grid(column=4, row=11, padx=30)
+        quit_button.grid(column=4, row=12, padx=30)
 
 
 class FormInputs:
@@ -247,23 +265,35 @@ class RandomNote:
         msg = mido.Message('note_off', channel=self.params.channel, note=note)
         self.out_port.send(msg)
 
-    def note_processor(self):  # co-ordinates output of note messages
+    def note_processor(self, last_note):
+        note = self.scale_check(self.note_gen())
+        if note:
+            self.play_note(note)
+            return note
+        elif self.params.every_step:
+            self.play_note(last_note)
+            return last_note
+
+    def end_of_loop_process(self):
+        global run_state
+        if run_state:
+            print('End of pattern')
+        else:
+            print('Sequence ended by user')
+        self.out_port.close()
+
+    def loop_controller(self):  # co-ordinates output of note messages
+        global run_state
         loops = self.params.note_value * self.params.bars
         last_note = random.choice(self.params.scale)
-        while loops > 0:
+        while loops > 0 and run_state:
             loops -= 1
             start = dtime()
-            note = self.scale_check(self.note_gen())
             rest = self.micro_time()
-            if note:
-                self.play_note(note)
-                last_note = note
-            elif self.params.every_step:
-                self.play_note(last_note)
+            last_note = self.note_processor(last_note)
             end = dtime()
             sleep(rest - (end - start))
-        print('End of Pattern')
-        self.out_port.close()
+        self.end_of_loop_process()
 
 
 if __name__ == '__main__':
