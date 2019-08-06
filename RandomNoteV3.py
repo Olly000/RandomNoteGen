@@ -365,6 +365,8 @@ class RandomNote:
             print('End of pattern')
         else:
             print('Sequence ended by user')
+        gui.buttons['stop'].config(state='disabled')
+        gui.buttons['play'].config(state='normal')
         self.out_port.close()
 
     def loop_controller(self) -> None:
@@ -387,6 +389,6 @@ class RandomNote:
 if __name__ == '__main__':
 
     root = tk.Tk()
-    app = Interface(master=root)
-    app.master.title("Random Note Generator")
-    app.mainloop()
+    gui = Interface(master=root)
+    gui.master.title("Random Note Generator")
+    gui.mainloop()
