@@ -32,9 +32,9 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         self.numbers = self.create_num_fields()
         self.key = self.create_char_field()
         self.scale = self.create_scale_menu()
-        self.create_buttons()
         self.quantise = self.create_quant_box()
         self.every_step = self.create_every_note()
+        self.buttons = self.create_buttons()
 
     def end_app(self):
         global run_state
@@ -42,10 +42,11 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         self.master.destroy()
         print('App terminated by user')
 
-    @staticmethod
-    def stop_seq():
+    def stop_seq(self):
         global run_state
         run_state = False
+        self.buttons['stop'].config(state='disabled')
+        self.buttons['play'].config(state='normal')
 
     def grab_entry_fields(self):  # Obtains current values from input widgets and returns them as a list
         data = []
@@ -63,6 +64,8 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
             FormInputs and the note generating class RandomNote then runs the note generation method of RandomNote"""
         global run_state
         run_state = True
+        self.buttons['play'].config(state='disabled')
+        self.buttons['stop'].config(state='normal')
         user_input = FormInputs(self.grab_entry_fields())
         generate = RandomNote(user_input)
         process_thread = threading.Thread(target=generate.loop_controller)
@@ -143,7 +146,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
     def create_buttons(self):
         clear = tk.Button(root, text='Return to Defaults', command=self.clear_all)
         play = tk.Button(root, text='Play Sequence', command=self.generate_output, bg='green')
-        stop_seq = tk.Button(root, text='Stop Sequence', command=self.stop_seq, bg='yellow')
+        stop_seq = tk.Button(root, text='Stop Sequence', command=self.stop_seq, bg='yellow', state='disabled')
         display_ports = tk.Button(root, text='Display Ports', command=self.port_popup)
         quit_button = tk.Button(root, text="Quit", bg="red", command=self.end_app)
         clear.grid(column=3, row=0, padx=30, pady=5, sticky='n')
@@ -151,10 +154,11 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         stop_seq.grid(column=3, row=12, padx=10, pady=10, sticky='sw')
         display_ports.grid(column=2, row=0, padx=15, sticky='w')
         quit_button.grid(column=4, row=12, padx=30)
+        return {'clear': clear, 'play': play, 'stop': stop_seq, 'display': display_ports, 'quit': quit_button}
 
 
 class FormInputs:
-    def __init__(self, user_data):  # user_data is a list returned by the Interface class when play button is clicked
+    def __init__(self, user_data):  # user_data is a dict returned by the Interface class when play button is clicked
         self.key_values = {'c': 0, 'c#': 1, 'd': 2, 'd#': 3, 'e': 4,
                            'f': 5, 'f#': 6, 'g': 7, 'g#': 8, 'a': 9, 'a#': 10, 'b': 11}
         self.key_maps = {
