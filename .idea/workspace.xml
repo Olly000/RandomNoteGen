@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d69d1f95-c3d0-467a-9967-bbc8e66a7865" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RandomNoteGen.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RandomNoteGen.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/RandomNoteV3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/RandomNoteV3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RandomNoteV3.py" beforeDir="false" afterPath="$PROJECT_DIR$/RandomNoteV3.py" afterDir="false" />
     </list>
@@ -20,11 +17,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RandomNoteV3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="67" column="51" selection-start-line="67" selection-start-column="51" selection-end-line="67" selection-end-column="51" />
+            <state relative-caret-position="331">
+              <caret line="368" column="11" selection-start-line="368" selection-start-column="11" selection-end-line="368" selection-end-column="11" />
               <folding>
                 <element signature="e#24#35#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="469">
+              <caret line="144" selection-start-line="144" selection-end-line="144" />
             </state>
           </provider>
         </entry>
@@ -76,6 +82,15 @@
             <path>
               <item name="RandomNoteGen" type="b2602c69:ProjectViewProjectNode" />
               <item name="RandomNoteGen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RandomNoteGen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+            <path>
+              <item name="RandomNoteGen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
             </path>
           </expand>
           <select />
@@ -223,8 +238,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.RandomNoteV3" />
         <item itemvalue="Python.scratch_1" />
+        <item itemvalue="Python.RandomNoteV3" />
         <item itemvalue="Python.RandomNoteV2" />
         <item itemvalue="Python.RandomNoteGUI" />
         <item itemvalue="Python.RandomNote" />
@@ -284,7 +299,21 @@
       <option name="project" value="LOCAL" />
       <updated>1563364315412</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Improved button behaviour to prevent double pressing">
+      <created>1565092308898</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1565092308898</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Type hinting and docstrings added">
+      <created>1565106519515</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1565106519515</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -304,7 +333,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49841937" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -385,7 +414,9 @@
     <MESSAGE value="Interface functioning - need to associate with Inputs class" />
     <MESSAGE value="GUI integrated, a few things a bit hacky though..." />
     <MESSAGE value="Clarified data passed between Interface and FormInputs classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clarified data passed between Interface and FormInputs classes" />
+    <MESSAGE value="Improved button behaviour to prevent double pressing" />
+    <MESSAGE value="Type hinting and docstrings added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Type hinting and docstrings added" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../WordGame/wordgame.py">
@@ -434,15 +465,15 @@
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2380">
-          <caret line="140" column="81" selection-start-line="140" selection-start-column="81" selection-end-line="140" selection-end-column="81" />
+        <state relative-caret-position="469">
+          <caret line="144" selection-start-line="144" selection-end-line="144" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RandomNoteV3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="67" column="51" selection-start-line="67" selection-start-column="51" selection-end-line="67" selection-end-column="51" />
+        <state relative-caret-position="331">
+          <caret line="368" column="11" selection-start-line="368" selection-start-column="11" selection-end-line="368" selection-end-column="11" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
           </folding>
