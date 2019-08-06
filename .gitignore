@@ -1,0 +1,12 @@
+venv
+# This shouldn't be in this .gitignore file. It should really be in a global .gitignore file - people in other projects
+# don't want to see stuff relating to your own machine in shared code, either as committed files or in things like this,
+# and adding the JetBrains config to every directory is a pain in the arse.
+# This - https://help.github.com/en/articles/ignoring-files#create-a-global-gitignore
+# is how you do it on Linux. Fuck knows how you do it on Windows, because programming on Windows is insanity.
+# Something like this might work in 'cmd':
+# git config --global core.excludesfile %USERPROFILE%\.gitignore_global
+# ...but I dunno where your actual 'Home' directory is on Windows. Using `cd %USERPROFILE%` should get you there, then
+# you can create `gitignore_global` and add `.idea` to it.
+# The Linux version might work in Git Bash.
+.idea
