@@ -36,19 +36,28 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         self.every_step = self.create_every_note()
         self.buttons = self.create_buttons()
 
-    def end_app(self):
+    def end_app(self) -> None:
+        """ Callback from the quit button - ends note processing by setting run_state to false and
+        destroys tk.frame
+        """
         global run_state
         run_state = False
         self.master.destroy()
         print('App terminated by user')
 
-    def stop_seq(self):
+    def stop_seq(self) -> None:
+        """ Stops a note sequence while it is running, sets button widgets states to allow another sequence
+        to be started by user
+        """
         global run_state
         run_state = False
         self.buttons['stop'].config(state='disabled')
         self.buttons['play'].config(state='normal')
 
-    def grab_entry_fields(self):  # Obtains current values from input widgets and returns them as a list
+    def grab_entry_fields(self) -> dict:
+        """ Gets data input to user from entry/tickbox and menu widgets and returns it as a dict
+        :return: a dict containing data entered into widgets by user
+        """
         data = []
         fields = self.num_fields + ['Key', 'Scale', 'Every Step', 'Quantise']
         for item in self.numbers:
@@ -59,9 +68,10 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         data.append(self.quantise.get())
         return dict(zip(fields, data))
 
-    def generate_output(self):
-        """Triggered as a callback from the play button - creates instances of the input handling class
-            FormInputs and the note generating class RandomNote then runs the note generation method of RandomNote"""
+    def generate_output(self) -> None:
+        """ Triggered as a callback from the play button - creates instances of the input handling class
+            FormInputs and the note generating class RandomNote then runs the note generation method of RandomNote
+            in a new thread"""
         global run_state
         run_state = True
         self.buttons['play'].config(state='disabled')
@@ -72,14 +82,20 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         process_thread.start()
 
     @staticmethod
-    def port_popup():  # creates a pop-up window listing available MIDI ports when the display widget is clicked
+    def port_popup() -> None:
+        """ Creates a messagebox pop-up window listing available MIDI ports. Triggered as a callback
+        from the display port button
+        """
         port_list = mido.get_output_names()
         text = 'Available MIDI ports are \n'
         for name in range(0, len(port_list)):
             text += ' %s %s\n' % (name, port_list[name])
         messagebox.showinfo('MIDI OUT', text)
 
-    def clear_all(self):  # clears all current values in widgets then calls populate_defaults when clear widget clicked
+    def clear_all(self) -> None:
+        """ Clears all user input data and returns all widgets to default vaules. Triggered as a callback from the
+        clear button
+        """
         for field in self.numbers:
             field[1].delete(0, 'end')
         self.key.delete(0, 'end')
@@ -87,14 +103,20 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         self.every_step.set(False)
         self.populate_defaults()
 
-    def populate_defaults(self):  # inserts default parameters in input widgets
+    def populate_defaults(self) -> None:
+        """ Inserts default data values stored in class variable self.defaults into widgets
+        """
         index = 0
         for field in self.numbers:
             field[1].insert(0, self.defaults[index])
             index += 1
         self.key.insert(0, self.defaults[-2])
 
-    def create_num_fields(self):  # creates entry widgets for each of the numerical input fields
+    def create_num_fields(self) -> list:
+        """ Creates entry widgets for all of the numerical data required from user and returns the widget
+        objects as a list
+        :return: list of widgets
+        """
         entries = []
         row = 0
         for field in self.num_fields:
@@ -107,7 +129,10 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
             row += 1
         return entries
 
-    def create_char_field(self):  # creates an entry widget for the key field, which remains a string
+    def create_char_field(self) -> object:
+        """ Creates an entry widget for key, which requires a string as input
+        :return: entry widget
+        """
         lab = tk.Label(width=15, text="Key")
         key_field = tk.Entry(width=3)
         key_field.insert('0', self.defaults[-2])
@@ -115,7 +140,10 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         key_field.grid(column=1, row=8, pady=5, sticky='e')
         return key_field
 
-    def create_scale_menu(self):  # creates a listbox entry to allow user to select from available scale maps
+    def create_scale_menu(self) -> object:
+        """ Creates a listbox widget to allow user to enter musical scale of sequence
+        :return: listbox widget
+        """
         lab = tk.Label(width=15, text="Scale")
         ddown = tk.Listbox(root, height=len(self.key_maps))
         lab.grid(column=0, row=9, pady=5, sticky='w')
@@ -125,8 +153,10 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         return ddown
 
     @staticmethod
-    def create_every_note():
-        # creates a tickbox to decide whether to play on every step, when out of scale note is generated
+    def create_every_note() -> object:
+        """ creates a tickbox to decide whether to play on every step, when out of scale note is generated
+        :return: tickbox widget
+        """
         label = 'Play Every Step?'
         step_var = tk.IntVar(root, label)
         step_var.set(False)
@@ -135,7 +165,10 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         return step_var
 
     @staticmethod
-    def create_quant_box():
+    def create_quant_box() -> object:
+        """ Creates a tickbox widget to decide whether gate length modulation should be quantised
+        :return: tickbox widget
+        """
         label = 'Quantise Gate Length Modulation?'
         quant_state = tk.IntVar(root, label)
         quant_state.set(False)
@@ -143,7 +176,11 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         quantise.grid(column=2, row=6, padx=30)
         return quant_state
 
-    def create_buttons(self):
+    def create_buttons(self) -> dict:
+        """ Creates buttons to allow user to start and stop sequence and to clear data, display ports and
+        quit the app
+        :return: dict of labelled button widgets
+        """
         clear = tk.Button(root, text='Return to Defaults', command=self.clear_all)
         play = tk.Button(root, text='Play Sequence', command=self.generate_output, bg='green')
         stop_seq = tk.Button(root, text='Stop Sequence', command=self.stop_seq, bg='yellow', state='disabled')
@@ -158,7 +195,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
 
 
 class FormInputs:
-    def __init__(self, user_data):  # user_data is a dict returned by the Interface class when play button is clicked
+    def __init__(self, user_data: dict) -> None:
         self.key_values = {'c': 0, 'c#': 1, 'd': 2, 'd#': 3, 'e': 4,
                            'f': 5, 'f#': 6, 'g': 7, 'g#': 8, 'a': 9, 'a#': 10, 'b': 11}
         self.key_maps = {
@@ -186,12 +223,22 @@ class FormInputs:
         self.interval = self.get_timebase()
         self.scale = self.scale_gen()
 
-    def get_port(self):  # requests user port
+    def get_port(self) -> str:
+        """ Checks available MIDI ports and returns the name of the port chosen as a string
+        No longer called in GUI version of the app
+        :return: name of MIDI port to be used
+        """
         port_list = mido.get_output_names()
         return port_list[self.port]
 
     @staticmethod
-    def note_list_gen(note_key, note_range):  # returns list of note numbers to be output
+    def note_list_gen(note_key: int, note_range: list) -> list:
+        """ Takes in the key offset value and the highest and lowest notes to be output
+        amd returns a list of notes as ints to be played
+        :param note_key:
+        :param note_range:
+        :return:
+        """
         note_list = []
         for n in note_key:
             note_list.append(note_range[0] + n)
@@ -202,24 +249,33 @@ class FormInputs:
                     note_list.append(note_range[0] + n)
         return note_list
 
-    def set_note_range(self):  # requests octave range and returns corresponding MIDI note number range
-        octs = self.octave_range
+    def set_note_range(self) -> list:
+        """ Uses the octave range specificed by user to calculate the highest and lowest note numbers to
+        be played
+        :return: highest and lowest note numbers to be played
+        """
         note_range = [60, 72]
-        if octs == 1:
+        if self.octave_range == 1:
             return note_range
         else:
-            note_range[0] -= (12 * int(octs / 2))
-            note_range[1] = 60 + (12 * int(octs / 2))
-            note_range[1] += (12 * (octs % 2))
+            note_range[0] -= (12 * int(self.octave_range / 2))
+            note_range[1] = 60 + (12 * int(self.octave_range / 2))
+            note_range[1] += (12 * (self.octave_range % 2))
         return note_range
 
-    def scale_gen(self):  # method to organise note list generation, returns note list
+    def scale_gen(self) -> list:
+        """ Organises note list generation by calling various class methods, returns note list
+        :return: list of notes to be played by sequencer
+        """
         scale_offset = self.key_values[self.key.lower()]
         note_range = [n+scale_offset for n in (self.set_note_range())]
         note_key = self.key_maps[self.scale_type]
         return self.note_list_gen(note_key, note_range)
 
-    def get_timebase(self):  # returns standard time interval between notes using user bpm and note value
+    def get_timebase(self) -> float:
+        """ Calculates standard time interval between notes using user bpm and note value specified by user
+        :return: interval between note on messages
+        """
         return (16/float(self.note_value)) * ((60.0 / float(self.bpm)) / 4.0)
 
 
@@ -228,23 +284,37 @@ class RandomNote:
         self.params = inputs  # stores all the user input variables needed to define the sequence
         self.out_port = mido.open_output(self.params.get_port())
 
-    def note_gen(self):  # generate a random number within the note range defined by Inputs.scale variable
+    def note_gen(self) -> int:
+        """ generate a random number within the note range defined by Inputs.scale variable
+        :return: a MIDI note number as an int
+        """
         return random.randint(self.params.scale[0], (self.params.scale[-1]+1))
 
-    def scale_check(self, note):  # checks generated note is in the params.scale variable
+    def scale_check(self, note: int) -> int:
+        """ checks whether note generated by note_gen is in the params.scale variable
+        returns false if note is not found
+        :param note:
+        :return: note or False
+        """
         if note in self.params.scale:
             return note
         else:
             return False
 
-    def gate_length(self):  # applies gate length modulation to note, returns corrected gate length
+    def gate_length(self) -> float:
+        """ applies gate length modulation to note, returns corrected gate length
+        :return: adjusted time between note on and note off
+        """
         mod_amount = (random.random() * self.params.gate_mod)/100
         if random.getrandbits(1):
             return (self.params.interval/2.0) + ((self.params.interval/2)*mod_amount)
         else:
             return (self.params.interval/2.0) - ((self.params.interval/2)*mod_amount)
 
-    def gate_length_quant(self):  # as gate_length but quantised to 16ths
+    def gate_length_quant(self) -> float:
+        """ as gate_length but quantised to 16ths
+        :return: adjusted time between note on a nd note off
+        """
         mod_options = [-0.75, -0.5, -0.25, -0.125, 0.125, 0.25, 0.5, 0.75]
         for mod in mod_options:
             if abs(mod * 100) > self.params.gate_mod:
@@ -253,23 +323,32 @@ class RandomNote:
             mod_options.append(0)
         return (self.params.interval/2) + (random.choice(mod_options) * (self.params.interval/2))
 
-    def micro_time(self):
+    def micro_time(self) -> float:
         """ applies random timing variation to interval time and returns corrected interval length
             nb: this method currently has no reference to grid so use of timing modulation will
-            result in the sequence playing in free time"""
+            result in the sequence playing in free time
+            :return: length of rest between note off and next note on"""
         if random.getrandbits(1):
             return self.params.interval + (self.params.interval * (self.params.time_mod/100))
         else:
             return self.params.interval - (self.params.interval * (self.params.time_mod/100))
 
-    def play_note(self, note):  # outputs note on and note off message for each iteration of note_processor loop
+    def play_note(self, note: int) -> None:
+        """ Outputs note on and off messages for each iteration of note_processor loop
+        :param note: MIDI note number
+        """
         msg = mido.Message('note_on', channel=self.params.channel, note=note)
         self.out_port.send(msg)
         sleep(self.gate_length())
         msg = mido.Message('note_off', channel=self.params.channel, note=note)
         self.out_port.send(msg)
 
-    def note_processor(self, last_note):
+    def note_processor(self, last_note: int) -> int:
+        """ takes the last note played, generates a new random note, checks it is in note_list then
+        plays generated note or last note.  Returns the note played
+        :param last_note: the note played by the previous iteration of loop_controller
+        :return: note sent to play_note method
+        """
         note = self.scale_check(self.note_gen())
         if note:
             self.play_note(note)
@@ -278,7 +357,9 @@ class RandomNote:
             self.play_note(last_note)
             return last_note
 
-    def end_of_loop_process(self):
+    def end_of_loop_process(self) -> None:
+        """ Informs user of reason for loop ending and closes the active MIDI port
+        """
         global run_state
         if run_state:
             print('End of pattern')
@@ -286,7 +367,10 @@ class RandomNote:
             print('Sequence ended by user')
         self.out_port.close()
 
-    def loop_controller(self):  # co-ordinates output of note messages
+    def loop_controller(self) -> None:
+        """ organises note output - iterates throough the number of loops specified by user, checking
+        end of seq has note been indicated by change in run_state
+        """
         global run_state
         loops = self.params.note_value * self.params.bars
         last_note = random.choice(self.params.scale)
