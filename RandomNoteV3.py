@@ -13,13 +13,23 @@ mido.set_backend('mido.backends.pygame')
 
 pym.init()
 
-run_state = False  # global variable that allows processing thread to be ended through interface button click
+
+class Switcher:  # manages state
+    def __init__(self):
+        self.run_state = False
+
+    def switch_on(self):
+        self.run_state = True
+
+    def switch_off(self):
+        self.run_state = False
 
 
 class Interface(tk.Frame):  # Creates the app's GUI and initiates processing through generate_output method
-    def __init__(self, master=None):
+    def __init__(self, switch, master=None):
         super().__init__(master)
         self.master = master
+        self.switch = switch
         self.num_fields = ['Port No', 'Channel', 'BPM', 'No. of Bars',
                            'Note Length', 'Octave Range', 'Gate Mod', 'Time Mod']
         self.defaults = [0, 1, 120, 8, 16, 2, 0, 0, 'c', 'maj']
@@ -40,8 +50,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         """ Callback from the quit button - ends note processing by setting run_state to false and
         destroys tk.frame
         """
-        global run_state
-        run_state = False
+        self.switch.run_state = False
         self.master.destroy()
         print('App terminated by user')
 
@@ -49,8 +58,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         """ Stops a note sequence while it is running, sets button widgets states to allow another sequence
         to be started by user
         """
-        global run_state
-        run_state = False
+        self.switch.run_state = False
         self.buttons['stop'].config(state='disabled')
         self.buttons['play'].config(state='normal')
 
@@ -72,12 +80,11 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         """ Triggered as a callback from the play button - creates instances of the input handling class
             FormInputs and the note generating class RandomNote then runs the note generation method of RandomNote
             in a new thread"""
-        global run_state
-        run_state = True
+        self.switch.run_state = True
         self.buttons['play'].config(state='disabled')
         self.buttons['stop'].config(state='normal')
         user_input = FormInputs(self.grab_entry_fields())
-        generate = RandomNote(user_input)
+        generate = RandomNote(user_input, self.switch)
         process_thread = threading.Thread(target=generate.loop_controller)
         process_thread.start()
 
@@ -280,8 +287,9 @@ class FormInputs:
 
 
 class RandomNote:
-    def __init__(self, inputs):
+    def __init__(self, inputs, switch):
         self.params = inputs  # stores all the user input variables needed to define the sequence
+        self.switch = switch
         self.out_port = mido.open_output(self.params.get_port())
 
     def note_gen(self) -> int:
@@ -360,8 +368,7 @@ class RandomNote:
     def end_of_loop_process(self) -> None:
         """ Informs user of reason for loop ending and closes the active MIDI port
         """
-        global run_state
-        if run_state:
+        if self.switch.run_state:
             print('End of pattern')
         else:
             print('Sequence ended by user')
@@ -373,10 +380,9 @@ class RandomNote:
         """ organises note output - iterates throough the number of loops specified by user, checking
         end of seq has note been indicated by change in run_state
         """
-        global run_state
         loops = self.params.note_value * self.params.bars
         last_note = random.choice(self.params.scale)
-        while loops > 0 and run_state:
+        while loops > 0 and self.switch.run_state:
             loops -= 1
             start = dtime()
             rest = self.micro_time()
@@ -389,6 +395,7 @@ class RandomNote:
 if __name__ == '__main__':
 
     root = tk.Tk()
-    gui = Interface(master=root)
+    state_manager = Switcher()
+    gui = Interface(state_manager, master=root)
     gui.master.title("Random Note Generator")
     gui.mainloop()
