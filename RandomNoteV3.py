@@ -380,16 +380,29 @@ class RandomNote:
             self.play_note(last_note)
             return last_note
 
+    def clock_out(self):
+        """ sends start/clock/stop messages to external sequencer
+        """
+        interval = 60/(24 * self.params.bpm)
+        self.out_port.send(mido.Message('start'))
+        while self.switch.run_state:
+            self.out_port.send(mido.Message('clock'))
+            sleep(interval)
+
     def start_sequencer(self) -> None:
+        """ checks status of start_ext_seq parameter and initiates clock_out method in a new
+        thread
+         """
         if self.params.start_ext_seq:
-            start_msg = mido.Message('start')
-            self.out_port.send(start_msg)
+            clock_thread = threading.Thread(target=self.clock_out)
+            clock_thread.start()
 
     def end_of_loop_process(self) -> None:
         """ Informs user of reason for loop ending and closes the active MIDI port
         """
         if self.switch.run_state:
             print('End of pattern')
+            self.switch.switch_off()
         else:
             print('Sequence ended by user')
         gui.buttons['stop'].config(state='disabled')
