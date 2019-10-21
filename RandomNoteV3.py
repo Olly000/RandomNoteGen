@@ -44,6 +44,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         self.scale = self.create_scale_menu()
         self.quantise = self.create_quant_box()
         self.every_step = self.create_every_note()
+        self.start_ext_seq = self.create_seq_start()
         self.buttons = self.create_buttons()
 
     def end_app(self) -> None:
@@ -63,17 +64,18 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         self.buttons['play'].config(state='normal')
 
     def grab_entry_fields(self) -> dict:
-        """ Gets data input to user from entry/tickbox and menu widgets and returns it as a dict
+        """ Gets data input from user entry/tickbox and menu widgets and returns it as a dict
         :return: a dict containing data entered into widgets by user
         """
         data = []
-        fields = self.num_fields + ['Key', 'Scale', 'Every Step', 'Quantise']
+        fields = self.num_fields + ['Key', 'Scale', 'Every Step', 'Quantise', 'Start Ext Seq']
         for item in self.numbers:
             data.append(int(item[1].get()))
         data.append(self.key.get())
         data.append(self.scale.get('active'))
         data.append(self.every_step.get())
         data.append(self.quantise.get())
+        data.append(self.start_ext_seq.get())
         return dict(zip(fields, data))
 
     def generate_output(self) -> None:
@@ -100,7 +102,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         messagebox.showinfo('MIDI OUT', text)
 
     def clear_all(self) -> None:
-        """ Clears all user input data and returns all widgets to default vaules. Triggered as a callback from the
+        """ Clears all user input data and returns all widgets to default values. Triggered as a callback from the
         clear button
         """
         for field in self.numbers:
@@ -172,6 +174,18 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         return step_var
 
     @staticmethod
+    def create_seq_start() -> object:
+        """creates a tickbox to decide whether to send a start message to an external sequencer
+        - used to record output
+        :return: tickbox widget"""
+        label = 'Start External Sequencer?'
+        seq_var = tk.IntVar(root, label)
+        seq_var.set(False)
+        start_ext_seq = tk.Checkbutton(root, text=label, var=seq_var)
+        start_ext_seq.grid(column=2, row=9, padx=30, sticky='nw')
+        return seq_var
+
+    @staticmethod
     def create_quant_box() -> object:
         """ Creates a tickbox widget to decide whether gate length modulation should be quantised
         :return: tickbox widget
@@ -225,6 +239,7 @@ class FormInputs:
         self.scale_type = user_data['Scale']
         self.every_step = user_data['Every Step']
         self.quantise_gate = user_data['Quantise']
+        self.start_ext_seq = user_data['Start Ext Seq']
 
         #  calculate further variables using data above and local class methods
         self.interval = self.get_timebase()
@@ -257,7 +272,7 @@ class FormInputs:
         return note_list
 
     def set_note_range(self) -> list:
-        """ Uses the octave range specificed by user to calculate the highest and lowest note numbers to
+        """ Uses the octave range specified by user to calculate the highest and lowest note numbers to
         be played
         :return: highest and lowest note numbers to be played
         """
@@ -365,6 +380,11 @@ class RandomNote:
             self.play_note(last_note)
             return last_note
 
+    def start_sequencer(self) -> None:
+        if self.params.start_ext_seq:
+            start_msg = mido.Message('start')
+            self.out_port.send(start_msg)
+
     def end_of_loop_process(self) -> None:
         """ Informs user of reason for loop ending and closes the active MIDI port
         """
@@ -377,11 +397,12 @@ class RandomNote:
         self.out_port.close()
 
     def loop_controller(self) -> None:
-        """ organises note output - iterates throough the number of loops specified by user, checking
-        end of seq has note been indicated by change in run_state
+        """ organises note output - iterates through the number of loops specified by user, checking
+        end of seq has not been indicated by change in run_state
         """
         loops = self.params.note_value * self.params.bars
         last_note = random.choice(self.params.scale)
+        self.start_sequencer()
         while loops > 0 and self.switch.run_state:
             loops -= 1
             start = dtime()
