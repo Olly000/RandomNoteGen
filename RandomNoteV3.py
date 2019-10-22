@@ -51,7 +51,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         """ Callback from the quit button - ends note processing by setting run_state to false and
         destroys tk.frame
         """
-        self.switch.run_state = False
+        self.switch.switch_off()
         self.master.destroy()
         print('App terminated by user')
 
@@ -59,7 +59,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         """ Stops a note sequence while it is running, sets button widgets states to allow another sequence
         to be started by user
         """
-        self.switch.run_state = False
+        self.switch.switch_off()
         self.buttons['stop'].config(state='disabled')
         self.buttons['play'].config(state='normal')
 
@@ -79,16 +79,25 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         return dict(zip(fields, data))
 
     def generate_output(self) -> None:
-        """ Triggered as a callback from the play button - creates instances of the input handling class
-            FormInputs and the note generating class RandomNote then runs the note generation method of RandomNote
-            in a new thread"""
-        self.switch.run_state = True
+        """ Creates instances of the input handling class FormInputs and the note generating class
+        RandomNote then runs the note generation method of RandomNote
+        in a new thread"""
+        self.switch.switch_on()
         self.buttons['play'].config(state='disabled')
         self.buttons['stop'].config(state='normal')
         user_input = FormInputs(self.grab_entry_fields())
         generate = RandomNote(user_input, self.switch)
         process_thread = threading.Thread(target=generate.loop_controller)
         process_thread.start()
+        process_thread.join()
+        self.buttons['stop'].config(state='disabled')
+        self.buttons['play'].config(state='normal')
+
+    def start_threads(self) -> None:
+        """ Triggered as a callback from the play button - starts a new thread for generate_output - needed to
+        handle button states without blocking interface thread"""
+        generate_thread = threading.Thread(target=self.generate_output)
+        generate_thread.start()
 
     @staticmethod
     def port_popup() -> None:
@@ -203,7 +212,7 @@ class Interface(tk.Frame):  # Creates the app's GUI and initiates processing thr
         :return: dict of labelled button widgets
         """
         clear = tk.Button(root, text='Return to Defaults', command=self.clear_all)
-        play = tk.Button(root, text='Play Sequence', command=self.generate_output, bg='green')
+        play = tk.Button(root, text='Play Sequence', command=self.start_threads, bg='green')
         stop_seq = tk.Button(root, text='Stop Sequence', command=self.stop_seq, bg='yellow', state='disabled')
         display_ports = tk.Button(root, text='Display Ports', command=self.port_popup)
         quit_button = tk.Button(root, text="Quit", bg="red", command=self.end_app)
@@ -405,8 +414,6 @@ class RandomNote:
             self.switch.switch_off()
         else:
             print('Sequence ended by user')
-        gui.buttons['stop'].config(state='disabled')
-        gui.buttons['play'].config(state='normal')
         self.out_port.close()
 
     def loop_controller(self) -> None:
