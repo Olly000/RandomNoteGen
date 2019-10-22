@@ -371,7 +371,10 @@ class RandomNote:
         """
         msg = mido.Message('note_on', channel=self.params.channel, note=note)
         self.out_port.send(msg)
-        sleep(self.gate_length())
+        if self.params.quantise_gate:
+            sleep(self.gate_length_quant())
+        else:
+            sleep(self.gate_length())
         msg = mido.Message('note_off', channel=self.params.channel, note=note)
         self.out_port.send(msg)
 
@@ -429,7 +432,9 @@ class RandomNote:
             rest = self.micro_time()
             last_note = self.note_processor(last_note)
             end = dtime()
-            sleep(rest - (end - start))
+            timing_correct = rest - (end - start)
+            if timing_correct > 0:
+                sleep(timing_correct)
         self.end_of_loop_process()
 
 
