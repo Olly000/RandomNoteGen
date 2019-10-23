@@ -315,6 +315,7 @@ class RandomNote:
         self.params = inputs  # stores all the user input variables needed to define the sequence
         self.switch = switch
         self.out_port = mido.open_output(self.params.get_port())
+        self.rest = 0
 
     def note_gen(self) -> int:
         """ generate a random number within the note range defined by Inputs.scale variable
@@ -361,9 +362,8 @@ class RandomNote:
             result in the sequence playing in free time
             :return: length of rest between note off and next note on"""
         if random.getrandbits(1):
-            return self.params.interval + (self.params.interval * (self.params.time_mod/100))
-        else:
-            return self.params.interval - (self.params.interval * (self.params.time_mod/100))
+            return self.params.interval * (self.params.time_mod/100)
+        return -1 * (self.params.interval * (self.params.time_mod/100))
 
     def play_note(self, note: int) -> None:
         """ Outputs note on and off messages for each iteration of note_processor loop
@@ -372,11 +372,14 @@ class RandomNote:
         msg = mido.Message('note_on', channel=self.params.channel, note=note)
         self.out_port.send(msg)
         if self.params.quantise_gate:
-            sleep(self.gate_length_quant())
+            gate = self.gate_length_quant()
+            sleep(gate)
         else:
-            sleep(self.gate_length())
+            gate = self.gate_length()
+            sleep(gate)
         msg = mido.Message('note_off', channel=self.params.channel, note=note)
         self.out_port.send(msg)
+        self.rest = self.params.interval - gate
 
     def note_processor(self, last_note: int) -> int:
         """ takes the last note played, generates a new random note, checks it is in note_list then
@@ -429,10 +432,10 @@ class RandomNote:
         while loops > 0 and self.switch.run_state:
             loops -= 1
             start = dtime()
-            rest = self.micro_time()
+            self.rest += self.micro_time()
             last_note = self.note_processor(last_note)
             end = dtime()
-            timing_correct = rest - (end - start)
+            timing_correct = self.rest - (end - start)
             if timing_correct > 0:
                 sleep(timing_correct)
         self.end_of_loop_process()
